@@ -10,22 +10,22 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 import sys
-sys.path.append('/home/hudi/anaconda2/lib/python2.7/site-packages/h5py')
-sys.path.append('/home/hudi/anaconda2/lib/python2.7/site-packages/Keras-2.0.6-py2.7.egg')
+# sys.path.append('/home/hudi/anaconda2/lib/python2.7/site-packages/h5py')
+# sys.path.append('/home/hudi/anaconda2/lib/python2.7/site-packages/Keras-2.0.6-py2.7.egg')
 
 
 from keras.models import Model
 from keras.layers import Flatten, Dense, Input, Conv2D, MaxPooling2D, GlobalAveragePooling2D, GlobalMaxPooling2D
-from keras.engine.topology import get_source_inputs
+from keras.utils.layer_utils import get_source_inputs
 from keras import backend as K
 
-import vggish_params as params
+from . import vggish_params as params
 
 
 # weight path
-WEIGHTS_PATH = '/home/brain/Documents/git/VGGish/vggish_audioset_weights_without_fc2.h5'
+# WEIGHTS_PATH = '/home/brain/Documents/git/VGGish/vggish_audioset_weights_without_fc2.h5'
 
-def VGGish(load_weights=True, weights='audioset',
+def VGGish(weights_path, load_weights=True, weights='audioset',
            input_tensor=None, input_shape=None,
            out_dim=None, include_top=True, pooling='avg'):
     '''
@@ -108,10 +108,7 @@ def VGGish(load_weights=True, weights='audioset',
     # load weights
     if load_weights:
         if weights == 'audioset':
-            if include_top:
-                model.load_weights(WEIGHTS_PATH_TOP)
-            else:
-                model.load_weights(WEIGHTS_PATH)
+            model.load_weights(weights_path)
         else:
             print("failed to load weights")
 
